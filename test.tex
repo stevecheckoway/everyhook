@@ -1,0 +1,32 @@
+\documentclass{article}
+\usepackage{everyhook}
+
+\begin{document}
+\PushPreHook{hbox}{def}
+\PushPreHook{hbox}{abc}
+\PushPostHook{hbox}{x}
+\PushPostHook{hbox}{\def\foo{yz}}
+\PushPostHook{hbox}{\foo}
+\hbox{Hello!}
+
+\SavePreHook{hbox}\prehboxhooks
+\SavePostHook{hbox}\posthboxhooks
+\ClearPreHook{hbox}
+\ClearPostHook{hbox}
+\hbox{Hmm.}
+\RestorePreHook{hbox}\prehboxhooks
+\RestorePostHook{hbox}\posthboxhooks
+
+\everyhbox{XXX}
+\hbox{Goodbye!}
+\ClearPreHook{hbox}
+\ClearPostHook{hbox}
+\everyhbox{}
+
+\PushPreHook{par}{\llap{\textbullet\enskip}}
+Here is a paragraph of text.
+
+Here is another.
+\ClearPreHook{par}
+
+\end{document}
